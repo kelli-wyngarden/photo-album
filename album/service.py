@@ -1,6 +1,8 @@
+import os
+
 import requests
 
-import album.app
+import app
 
 
 def prompt_for_album():
@@ -18,7 +20,8 @@ def prompt_for_new_album():
         response = input("\nWould you like to view another album (Y/N)? ")
         if response.lower() in ["y", "yes"]:
             prompt = False
-            album.app.run_app()
+            os.system("cls" if os.name == "nt" else "clear")
+            app.run_app()
         elif response.lower() in ["n", "no"]:
             exit()
         else:

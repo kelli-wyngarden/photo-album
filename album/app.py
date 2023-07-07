@@ -1,4 +1,4 @@
-from album import service
+import service
 
 
 def run_app():
@@ -10,4 +10,8 @@ def run_app():
         service.print_photo_album(album, photos)
     else:
         print("Error")
-        service.prompt_for_new_album()
+    service.prompt_for_new_album()
+
+
+if __name__ == "__main__":
+    run_app()

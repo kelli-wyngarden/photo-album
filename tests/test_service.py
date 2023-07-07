@@ -4,7 +4,7 @@ import pytest
 import requests.exceptions
 from requests import Response
 
-from album import service
+import service
 
 
 def test_prompt_for_album_prints_prompt(capsys):
@@ -65,7 +65,7 @@ def test_print_photo_album_prints_photos(capsys):
 def test_prompt_for_new_album_prints_invalid_input_if_not_y_n_yes_or_no(capsys, monkeypatch):
     mock_input = Mock(side_effect=["nope", "y"])
     monkeypatch.setattr("builtins.input", mock_input)
-    monkeypatch.setattr("album.app.run_app", Mock())
+    monkeypatch.setattr("app.run_app", Mock())
     service.prompt_for_new_album()
     prompt = capsys.readouterr()
     assert "Invalid input." in prompt.out
@@ -73,7 +73,7 @@ def test_prompt_for_new_album_prints_invalid_input_if_not_y_n_yes_or_no(capsys, 
 
 def test_prompt_for_new_album_calls_run_app_if_input_yes(monkeypatch):
     mock_run_app = Mock()
-    monkeypatch.setattr("album.app.run_app", mock_run_app)
+    monkeypatch.setattr("app.run_app", mock_run_app)
     monkeypatch.setattr("builtins.input", lambda x: "Y")
     service.prompt_for_new_album()
     mock_run_app.assert_called_once()

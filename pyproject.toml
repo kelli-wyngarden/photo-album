@@ -15,3 +15,9 @@ pytest = "^7.4.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+pythonpath = "album"
+addopts = [
+    "--import-mode=importlib",
+]
