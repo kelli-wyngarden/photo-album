@@ -59,3 +59,10 @@ def test_print_photo_album_prints_photos(capsys):
     assert f"Photo album {album_id} contains the following photos:" in prompt.out
     assert f"{photos[0]['id']}: {photos[0]['title']}" in prompt.out
     assert f"{photos[1]['id']}: {photos[1]['title']}" in prompt.out
+
+
+def test_prompt_for_new_album_prints_invalid_input_if_not_y_n_yes_or_no(capsys, monkeypatch):
+    monkeypatch.setattr("builtins.input", lambda x: "nope")
+    service.prompt_for_new_album()
+    prompt = capsys.readouterr()
+    assert "Invalid input." in prompt.out
