@@ -1,3 +1,5 @@
+from unittest.mock import Mock
+
 from album import service
 
 
@@ -18,3 +20,12 @@ def test_prompt_for_album_returns_value_if_input_is_int(monkeypatch):
     monkeypatch.setattr("builtins.input", lambda x: "3")
     result = service.prompt_for_album()
     assert result == 3
+
+
+def test_request_photos_makes_get_call_with_url_and_album_id(monkeypatch):
+    album_id = 12
+    expected_url = "https://jsonplaceholder.typicode.com/photos"
+    mock_requests = Mock()
+    monkeypatch.setattr("requests.get", mock_requests)
+    service.request_photos(album_id)
+    mock_requests.assert_called_once_with(expected_url, params={"albumId": album_id})

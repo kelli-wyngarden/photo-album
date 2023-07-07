@@ -1,3 +1,6 @@
+import requests
+
+
 def prompt_for_album():
     album = None
     try:
@@ -8,4 +11,7 @@ def prompt_for_album():
 
 
 def request_photos(album_id: int):
-    return
+    requests.get(
+        "https://jsonplaceholder.typicode.com/photos",
+        params={"albumId": album_id}
+    )
