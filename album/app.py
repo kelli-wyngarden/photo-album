@@ -10,3 +10,4 @@ def run_app():
         service.print_photo_album(album, photos)
     else:
         print("Error")
+        service.prompt_for_new_album()

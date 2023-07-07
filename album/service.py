@@ -10,6 +10,10 @@ def prompt_for_album():
     return album
 
 
+def prompt_for_new_album():
+    return
+
+
 def request_photos(album_id: int):
     try:
         response = requests.get(

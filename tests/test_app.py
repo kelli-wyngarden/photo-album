@@ -36,3 +36,12 @@ def test_app_prints_error_if_photos_size_is_zero(monkeypatch, capsys):
     run_app()
     prompt = capsys.readouterr()
     assert "Error" in prompt.out
+
+
+def test_app_calls_prompt_for_new_album_if_photos_size_is_zero(monkeypatch):
+    mock_prompt_for_new_album = Mock()
+    monkeypatch.setattr("album.service.prompt_for_new_album", mock_prompt_for_new_album)
+    monkeypatch.setattr("album.service.request_photos", lambda x: [])
+    monkeypatch.setattr("album.service.prompt_for_album", lambda: 65)
+    run_app()
+    mock_prompt_for_new_album.assert_called_once()
