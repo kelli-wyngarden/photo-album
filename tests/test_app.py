@@ -28,3 +28,11 @@ def test_app_calls_print_photo_album_with_album_and_photos_returned_from_request
     monkeypatch.setattr("album.service.print_photo_album", mock_print_photo_album)
     run_app()
     mock_print_photo_album.assert_called_once_with(expected_album_id, photos)
+
+
+def test_app_prints_error_if_photos_size_is_zero(monkeypatch, capsys):
+    monkeypatch.setattr("album.service.request_photos", lambda x: [])
+    monkeypatch.setattr("album.service.prompt_for_album", lambda: 65)
+    run_app()
+    prompt = capsys.readouterr()
+    assert "Error" in prompt.out

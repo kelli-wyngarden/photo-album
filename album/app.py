@@ -6,4 +6,7 @@ def run_app():
     while album is None:
         album = service.prompt_for_album()
     photos = service.request_photos(album)
-    service.print_photo_album(album, photos)
+    if len(photos) > 0:
+        service.print_photo_album(album, photos)
+    else:
+        print("Error")

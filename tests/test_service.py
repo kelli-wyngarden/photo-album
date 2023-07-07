@@ -51,7 +51,7 @@ def test_request_photos_returns_empty_list_if_exception_raised(monkeypatch):
     assert result == []
 
 
-def test_print_photo_album_prints_photos(monkeypatch, capsys):
+def test_print_photo_album_prints_photos(capsys):
     photos = [{"id": "1", "title": "photo1"}, {"id": "2", "title": "photo2"}]
     album_id = 42
     service.print_photo_album(album_id, photos)
