@@ -49,3 +49,13 @@ def test_request_photos_returns_empty_list_if_exception_raised(monkeypatch):
     monkeypatch.setattr("requests.get", mock_requests)
     result = service.request_photos(34)
     assert result == []
+
+
+def test_print_photo_album_prints_photos(monkeypatch, capsys):
+    photos = [{"id": "1", "title": "photo1"}, {"id": "2", "title": "photo2"}]
+    album_id = 42
+    service.print_photo_album(album_id, photos)
+    prompt = capsys.readouterr()
+    assert f"Photo album {album_id} contains the following photos:" in prompt.out
+    assert f"{photos[0]['id']}: {photos[0]['title']}" in prompt.out
+    assert f"{photos[1]['id']}: {photos[1]['title']}" in prompt.out

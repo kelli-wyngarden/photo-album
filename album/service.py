@@ -19,3 +19,9 @@ def request_photos(album_id: int):
         return response.json()
     except Exception:
         return []
+
+
+def print_photo_album(album_id: int, photos: list):
+    print(f"\nPhoto album {album_id} contains the following photos:")
+    for photo in photos:
+        print(f"\t{photo['id']}: {photo['title']}")
