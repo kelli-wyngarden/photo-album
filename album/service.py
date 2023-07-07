@@ -5,3 +5,7 @@ def prompt_for_album():
     except Exception:
         print("Invalid input. Please try again.")
     return album
+
+
+def request_photos(album_id: int):
+    return
