@@ -1,5 +1,7 @@
 import requests
 
+import album.app
+
 
 def prompt_for_album():
     album = None
@@ -11,9 +13,16 @@ def prompt_for_album():
 
 
 def prompt_for_new_album():
-    response = input("\nWould you like to view another album (Y/N)? ")
-    if response.lower() not in ["y", "n", "yes", "no"]:
-        print("Invalid input.")
+    prompt = True
+    while prompt is True:
+        response = input("\nWould you like to view another album (Y/N)? ")
+        if response.lower() in ["y", "yes"]:
+            prompt = False
+            album.app.run_app()
+        elif response.lower() in ["n", "no"]:
+            exit()
+        else:
+            print("Invalid input.")
 
 
 def request_photos(album_id: int):
