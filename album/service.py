@@ -11,7 +11,11 @@ def prompt_for_album():
 
 
 def request_photos(album_id: int):
-    requests.get(
-        "https://jsonplaceholder.typicode.com/photos",
-        params={"albumId": album_id}
-    )
+    try:
+        response = requests.get(
+            "https://jsonplaceholder.typicode.com/photos",
+            params={"albumId": album_id}
+        )
+        return response.json()
+    except Exception:
+        return []

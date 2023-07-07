@@ -1,5 +1,8 @@
 from unittest.mock import Mock
 
+import requests.exceptions
+from requests import Response
+
 from album import service
 
 
@@ -29,3 +32,20 @@ def test_request_photos_makes_get_call_with_url_and_album_id(monkeypatch):
     monkeypatch.setattr("requests.get", mock_requests)
     service.request_photos(album_id)
     mock_requests.assert_called_once_with(expected_url, params={"albumId": album_id})
+
+
+def test_request_photos_returns_response_json(monkeypatch):
+    expected_return = [{"id": "1", "title": "photo1"}, {"id": "2", "title": "photo2"}]
+    response = Response()
+    response.json = Mock(return_value=expected_return)
+    mock_requests = Mock(return_value=response)
+    monkeypatch.setattr("requests.get", mock_requests)
+    result = service.request_photos(34)
+    assert result == expected_return
+
+
+def test_request_photos_returns_empty_list_if_exception_raised(monkeypatch):
+    mock_requests = Mock(side_effect=requests.exceptions.RequestException)
+    monkeypatch.setattr("requests.get", mock_requests)
+    result = service.request_photos(34)
+    assert result == []
