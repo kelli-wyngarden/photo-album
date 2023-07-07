@@ -1,20 +1,10 @@
-from album import app
+from unittest.mock import Mock
+
+from album.app import run_app
 
 
-def test_prompt_for_album_prints_prompt(capsys):
-    app.prompt_for_album()
-    prompt = capsys.readouterr()
-    assert "Please enter the ID of the photo album you would like to view content for: " in prompt.out
-
-
-def test_prompt_for_album_prints_error_if_input_is_string(capsys, monkeypatch):
-    monkeypatch.setattr("builtins.input", lambda x: "three")
-    app.prompt_for_album()
-    prompt = capsys.readouterr()
-    assert "Invalid input. Please try again." in prompt.out
-
-
-def test_prompt_for_album_returns_value_if_input_is_int(monkeypatch):
-    monkeypatch.setattr("builtins.input", lambda x: "3")
-    result = app.prompt_for_album()
-    assert result == 3
+def test_app_calls_prompt_for_album_until_return_value_not_none(monkeypatch):
+    mock_prompt_for_album = Mock(side_effect=[None, None, 3])
+    monkeypatch.setattr("album.service.prompt_for_album", mock_prompt_for_album)
+    run_app()
+    assert mock_prompt_for_album.call_count == 3
